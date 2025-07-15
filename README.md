@@ -96,3 +96,6 @@ Submit a pull request
 🙏 Acknowledgements
 This project was inspired by the need to empower individuals who are often left out of digital systems.
 Special thanks to Rakhi Tembhare and all contributors working on digital inclusion.
+
+
+
