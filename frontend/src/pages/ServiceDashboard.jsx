@@ -34,6 +34,8 @@ import {
   Award,
   DollarSign
 } from "lucide-react";
+import axios from "axios";
+
 
 const statusColors = {
   Pending: "bg-yellow-100 text-yellow-800 border-yellow-200",
@@ -53,65 +55,19 @@ const ServiceDashboard = () => {
   const [currentView, setCurrentView] = useState("overview");
 
   // Mock data - replace with your actual API call
-  const fetchAllUsers = async () => {
+ const fetchAllUsers = async () => {
+  try {
     setLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    const mockUsers = [
-      {
-        _id: "1",
-        name: "John Doe",
-        email: "john@example.com",
-        address: "123 Main St, City",
-        servicesApplied: [
-          { type: "License Application", status: "Approved", appliedAt: "2024-01-15T10:30:00Z" },
-          { type: "Tax Filing", status: "Pending", appliedAt: "2024-01-20T14:15:00Z" }
-        ]
-      },
-      {
-        _id: "2",
-        name: "Jane Smith",
-        email: "jane@example.com",
-        address: "456 Oak Ave, Town",
-        servicesApplied: [
-          { type: "Business Registration", status: "Rejected", appliedAt: "2024-01-10T09:00:00Z" },
-          { type: "Permit Application", status: "Approved", appliedAt: "2024-01-18T11:45:00Z" }
-        ]
-      },
-      {
-        _id: "3",
-        name: "Mike Johnson",
-        email: "mike@example.com",
-        address: "789 Pine Rd, Village",
-        servicesApplied: [
-          { type: "License Application", status: "Pending", appliedAt: "2024-01-22T16:20:00Z" }
-        ]
-      },
-      {
-        _id: "4",
-        name: "Sarah Wilson",
-        email: "sarah@example.com",
-        address: "321 Elm St, District",
-        servicesApplied: [
-          { type: "Tax Filing", status: "Approved", appliedAt: "2024-01-25T08:30:00Z" },
-          { type: "Business Registration", status: "Pending", appliedAt: "2024-01-28T13:15:00Z" }
-        ]
-      },
-      {
-        _id: "5",
-        name: "David Brown",
-        email: "david@example.com",
-        address: "654 Cedar Ave, County",
-        servicesApplied: [
-          { type: "Permit Application", status: "Rejected", appliedAt: "2024-01-12T15:45:00Z" }
-        ]
-      }
-    ];
-    
-    setUsers(mockUsers);
-    calculateStats(mockUsers);
+    const res = await axios.get("http://localhost:5000/api/users"); // 🔁 Use your real API endpoint
+    const data = res.data;
+    setUsers(data);
+    calculateStats(data);
+  } catch (error) {
+    console.error("Failed to fetch users:", error);
+  } finally {
     setLoading(false);
-  };
+  }
+};
 
   const calculateStats = (userData) => {
     const totalApplications = userData.reduce((acc, user) => acc + (user.servicesApplied?.length || 0), 0);

@@ -4,6 +4,8 @@ import axios from "axios";
 import QRCode from "react-qr-code";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import { toast } from "react-toastify";
+
 
 const UserDetail = () => {
   const { id } = useParams();
@@ -105,26 +107,29 @@ const UserDetail = () => {
         document.body.removeChild(printContent);
       });
   };
+const handleApplyService = async () => {
+  if (!serviceType) return toast.error("Please select a service.");
 
-  const handleApplyService = async () => {
-    if (!serviceType) return alert("Please select a service.");
+  try {
+    await axios.post(`http://localhost:5000/api/users/${id}/apply-service`, {
+      userId: id,
+      serviceType,
+      notes,
+    });
 
-    try {
-      await axios.post(`http://192.168.1.108:5000/api/users/${id}/apply-service`, {
-        userId: id,
-        serviceType,
-        notes,
-      });
-
-      alert("Service application submitted successfully.");
-      setServiceType("");
-      setNotes("");
-    } catch (error) {
-      console.error("Service application failed:", error);
-      alert("Failed to submit service application.");
+    toast.success("Service application submitted successfully.");
+    setServiceType("");
+    setNotes("");
+  } catch (error) {
+    console.error("Service application failed:", error);
+    
+    if (error.response?.data?.message === "Already applied for this service") {
+      toast.warning("You've already applied for this service.");
+    } else {
+      toast.error("Failed to submit service application.");
     }
-  };
-
+  }
+};
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">

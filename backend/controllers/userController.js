@@ -123,30 +123,37 @@ const updateUser = async (req, res) => {
 // ✅ APPLY FOR A SERVICE (post-registration)
 const applyForService = async (req, res) => {
   try {
-    const { serviceType } = req.body;
+    const { serviceType, notes } = req.body;
     const user = await User.findById(req.params.id);
+
     if (!user) return res.status(404).json({ message: "User not found" });
 
     if (!user.servicesApplied) user.servicesApplied = [];
 
-    const alreadyApplied = user.servicesApplied.find((s) => s.type === serviceType);
+    const alreadyApplied = user.servicesApplied.find(
+      (s) => s.type === serviceType
+    );
+
     if (alreadyApplied) {
       return res.status(400).json({ message: "Already applied for this service" });
     }
 
+    // ✅ Push new service
     user.servicesApplied.push({
       type: serviceType,
       appliedAt: new Date(),
-      status: "Pending",
+      status: 'Pending',
     });
 
-    await user.save();
+    await user.save(); // ✅ Save to DB
+
     res.status(200).json({ message: "Service application submitted successfully" });
   } catch (err) {
     console.error("Apply Service Error:", err);
     res.status(500).json({ message: "Server error" });
   }
 };
+
 
 // ✅ UPDATE Service Status by Admin
 const updateServiceStatus = async (req, res) => {
