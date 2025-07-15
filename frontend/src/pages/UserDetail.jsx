@@ -10,15 +10,22 @@ const UserDetail = () => {
   const [user, setUser] = useState(null);
   const [serviceType, setServiceType] = useState("");
   const [notes, setNotes] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const detailRef = useRef();
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
+        setLoading(true);
         const res = await axios.get(`http://192.168.1.108:5000/api/users/${id}`);
         setUser(res.data);
+        setError("");
       } catch (error) {
         console.error("Error fetching user:", error);
+        setError("Failed to load user details. Please try again.");
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -61,19 +68,21 @@ const UserDetail = () => {
     printContent.style.width = "600px";
 
     printContent.innerHTML = `
-      <h2 style="font-size: 22px; text-align: center; font-weight: bold; margin-bottom: 10px;">User Details</h2>
-      <p><strong>Name:</strong> ${user.name}</p>
-      <p><strong>Email:</strong> ${user.email}</p>
-      <p><strong>Phone:</strong> ${user.phone}</p>
-      <p><strong>Address:</strong> ${user.address}</p>
-      <p><strong>Gender:</strong> ${user.gender}</p>
-      <p><strong>Age:</strong> ${user.age}</p>
-      <br />
-      <p><strong>Photo:</strong></p>
-      <img src="http://192.168.1.108:5000/uploads/${user.photo}" style="width: 100px; height: 100px; object-fit: cover;" />
-      <br /><br />
-      <p><strong>Document:</strong></p>
-      <a href="http://192.168.1.108:5000/uploads/${user.document}" style="color: blue;">View Document</a>
+      <h2 style="font-size: 22px; text-align: center; font-weight: bold; margin-bottom: 20px; color: #1f2937;">User Details</h2>
+      <div style="border: 2px solid #e5e7eb; padding: 20px; border-radius: 8px;">
+        <p style="margin-bottom: 8px;"><strong>Name:</strong> ${user.name}</p>
+        <p style="margin-bottom: 8px;"><strong>Email:</strong> ${user.email}</p>
+        <p style="margin-bottom: 8px;"><strong>Phone:</strong> ${user.phone}</p>
+        <p style="margin-bottom: 8px;"><strong>Address:</strong> ${user.address}</p>
+        <p style="margin-bottom: 8px;"><strong>Gender:</strong> ${user.gender}</p>
+        <p style="margin-bottom: 8px;"><strong>Age:</strong> ${user.age}</p>
+        <br />
+        <p style="margin-bottom: 8px;"><strong>Photo:</strong></p>
+        <img src="http://192.168.1.108:5000/uploads/${user.photo}" style="width: 120px; height: 120px; object-fit: cover; border-radius: 8px; border: 2px solid #e5e7eb;" />
+        <br /><br />
+        <p style="margin-bottom: 8px;"><strong>Document:</strong></p>
+        <a href="http://192.168.1.108:5000/uploads/${user.document}" style="color: #2563eb; text-decoration: underline;">View Document</a>
+      </div>
     `;
 
     document.body.appendChild(printContent);
@@ -116,109 +125,228 @@ const UserDetail = () => {
     }
   };
 
-  if (!user) return <div className="text-center mt-10">Loading...</div>;
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600 text-lg">Loading user details...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 to-pink-100">
+        <div className="bg-white shadow-lg rounded-xl p-8 text-center max-w-md">
+          <div className="text-red-500 text-5xl mb-4">⚠️</div>
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">Error</h2>
+          <p className="text-gray-600">{error}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="mt-4 bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-colors"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100">
+        <div className="text-center">
+          <p className="text-gray-600 text-lg">User not found</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      <div ref={detailRef} className="bg-white shadow-lg rounded-xl p-6 w-full max-w-xl">
-        <h2 className="text-2xl font-bold mb-4 text-center">User Details</h2>
-
-        <div className="space-y-2">
-          <p><strong>Name:</strong> {user.name}</p>
-          <p><strong>Email:</strong> {user.email}</p>
-          <p><strong>Phone:</strong> {user.phone}</p>
-          <p><strong>Address:</strong> {user.address}</p>
-          <p><strong>Gender:</strong> {user.gender}</p>
-          <p><strong>Age:</strong> {user.age}</p>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 px-4 py-8">
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-gray-800 mb-2">User Profile</h1>
+          <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto rounded-full"></div>
         </div>
 
-        <div className="my-4">
-          <p className="font-semibold">Photo:</p>
-          <img
-            src={`http://192.168.1.108:5000/uploads/${user.photo}`}
-            alt="User"
-            className="w-32 h-32 object-cover rounded mt-1"
-          />
-        </div>
-
-        <div className="my-4">
-          <p className="font-semibold">Document:</p>
-          <a
-            href={`http://192.168.1.108:5000/uploads/${user.document}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-600 underline"
-          >
-            View Document
-          </a>
-        </div>
-
-        <div className="mt-6 text-center">
-          <p className="font-semibold mb-2">QR Code (opens this page)</p>
-          <div className="inline-block bg-white p-2 rounded shadow">
-            <QRCode value={`http://192.168.1.108:5173/user/${id}`} size={128} />
-          </div>
-        </div>
-
-        <div className="mt-6 text-center space-x-4">
-          <button
-            onClick={handleDownloadQR}
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-          >
-            Download QR as PNG
-          </button>
-          <button
-            onClick={handleDownloadPDF}
-            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-          >
-            Download Details as PDF
-          </button>
-
-          {/* <div className="mt-8 bg-gray-100 p-4 rounded-lg">
-            <h3 className="text-xl font-semibold mb-4 text-center text-gray-800">
-              Apply for Services
-            </h3>
-
-            <div className="mb-3">
-              <label className="block text-sm font-medium mb-1">
-                Select Service:
-              </label>
-              <select
-                value={serviceType}
-                onChange={(e) => setServiceType(e.target.value)}
-                className="w-full p-2 border rounded"
-              >
-                <option value="">-- Choose --</option>
-                <option value="Ration">Ration</option>
-                <option value="Shelter">Shelter</option>
-                <option value="Healthcare">Healthcare</option>
-                <option value="Job">Job</option>
-              </select>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Main User Details Card */}
+          <div ref={detailRef} className="bg-white shadow-xl rounded-2xl p-8 hover:shadow-2xl transition-shadow duration-300">
+            <div className="flex items-center justify-center mb-6">
+              <div className="relative">
+                <img
+                  src={`http://192.168.1.108:5000/uploads/${user.photo}`}
+                  alt={user.name}
+                  className="w-32 h-32 object-cover rounded-full border-4 border-blue-200 shadow-lg"
+                />
+                <div className="absolute -bottom-2 -right-2 bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center">
+                  ✓
+                </div>
+              </div>
             </div>
 
-            <div className="mb-3">
-              <label className="block text-sm font-medium mb-1">
-                Notes (optional):
-              </label>
-              <textarea
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-                rows={3}
-                className="w-full p-2 border rounded"
-                placeholder="Additional info or special needs..."
-              ></textarea>
+            <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">{user.name}</h2>
+
+            <div className="space-y-4">
+              <div className="flex items-center p-3 bg-gray-50 rounded-lg">
+                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                  📧
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Email</p>
+                  <p className="font-semibold text-gray-800">{user.email}</p>
+                </div>
+              </div>
+
+              <div className="flex items-center p-3 bg-gray-50 rounded-lg">
+                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                  📱
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Phone</p>
+                  <p className="font-semibold text-gray-800">{user.phone}</p>
+                </div>
+              </div>
+
+              <div className="flex items-center p-3 bg-gray-50 rounded-lg">
+                <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center mr-3">
+                  🏠
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Address</p>
+                  <p className="font-semibold text-gray-800">{user.address}</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex items-center p-3 bg-gray-50 rounded-lg">
+                  <div className="w-8 h-8 bg-pink-100 rounded-full flex items-center justify-center mr-3">
+                    {user.gender === 'Male' ? '👨' : user.gender === 'Female' ? '👩' : '👤'}
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">Gender</p>
+                    <p className="font-semibold text-gray-800">{user.gender}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center p-3 bg-gray-50 rounded-lg">
+                  <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mr-3">
+                    🎂
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">Age</p>
+                    <p className="font-semibold text-gray-800">{user.age} years</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-3 bg-gray-50 rounded-lg">
+                <div className="flex items-center mb-2">
+                  <div className="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center mr-3">
+                    📄
+                  </div>
+                  <p className="text-sm text-gray-500">Document</p>
+                </div>
+                <a
+                  href={`http://192.168.1.108:5000/uploads/${user.document}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium transition-colors"
+                >
+                  View Document
+                  <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* QR Code and Actions Card */}
+          <div className="space-y-6">
+            {/* QR Code Card */}
+            <div className="bg-white shadow-xl rounded-2xl p-8 text-center hover:shadow-2xl transition-shadow duration-300">
+              <h3 className="text-2xl font-bold text-gray-800 mb-4">QR Code</h3>
+              <p className="text-gray-600 mb-6">Scan to view this profile</p>
+              
+              <div className="inline-block bg-gradient-to-br from-blue-50 to-purple-50 p-6 rounded-2xl shadow-inner">
+                <QRCode 
+                  value={`http://192.168.1.108:5173/user/${id}`} 
+                  size={180}
+                  style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+                />
+              </div>
+
+              <div className="mt-6 space-y-3">
+                <button
+                  onClick={handleDownloadQR}
+                  className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-3 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 transform hover:scale-105 shadow-lg font-semibold"
+                >
+                  📥 Download QR Code
+                </button>
+                
+                <button
+                  onClick={handleDownloadPDF}
+                  className="w-full bg-gradient-to-r from-green-600 to-green-700 text-white px-6 py-3 rounded-lg hover:from-green-700 hover:to-green-800 transition-all duration-200 transform hover:scale-105 shadow-lg font-semibold"
+                >
+                  📄 Download PDF Report
+                </button>
+              </div>
             </div>
 
-            <div className="text-center">
-              <button
-                onClick={handleApplyService}
-                className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
-              >
-                Submit Application
-              </button> */}
-            </div> 
+            {/* Service Application Card */}
+            <div className="bg-white shadow-xl rounded-2xl p-8 hover:shadow-2xl transition-shadow duration-300">
+              <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+                Apply for Services
+              </h3>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Select Service
+                  </label>
+                  <select
+                    value={serviceType}
+                    onChange={(e) => setServiceType(e.target.value)}
+                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none transition-colors"
+                  >
+                    <option value="">-- Choose a Service --</option>
+                    <option value="Ration">🍽️ Ration</option>
+                    <option value="Shelter">🏠 Shelter</option>
+                    <option value="Healthcare">🏥 Healthcare</option>
+                    <option value="Job">💼 Job</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Additional Notes (Optional)
+                  </label>
+                  <textarea
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
+                    rows={4}
+                    className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none transition-colors resize-none"
+                    placeholder="Please provide any additional information or special requirements..."
+                  />
+                </div>
+
+                <button
+                  onClick={handleApplyService}
+                  className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-3 rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all duration-200 transform hover:scale-105 shadow-lg font-semibold"
+                >
+                  🚀 Submit Application
+                </button>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
+    </div>
   );
 };
 
