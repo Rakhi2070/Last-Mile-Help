@@ -1,1 +1,2 @@
-export const BASE_URL = import.meta.env.VITE_BASE_URL;
+console.log("BACKEND URL:", import.meta.env.VITE_BACKEND_URL);
+export const BASE_URL = import.meta.env.VITE_BACKEND_URL;
