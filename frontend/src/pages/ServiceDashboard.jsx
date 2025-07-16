@@ -231,7 +231,7 @@ const ServiceDashboard = () => {
           </button>
         </nav>
 
-        <div className="absolute bottom-6 left-6 right-6">
+        <div className="absolute bottom-6 left-6 right-6 hidden md:block">
           <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg p-4 text-white">
             <div className="flex items-center mb-2">
               <Award className="w-5 h-5 mr-2" />
@@ -281,81 +281,75 @@ const ServiceDashboard = () => {
         {currentView === "overview" && (
           <div className="space-y-8">
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">
-                      Total Users
-                    </p>
-                    <p className="text-3xl font-bold text-gray-900">
-                      {stats.totalUsers}
-                    </p>
-                    <p className="text-sm text-green-600 mt-1">
-                      +12% from last month
-                    </p>
-                  </div>
-                  <div className="p-3 bg-blue-100 rounded-full">
-                    <Users className="w-6 h-6 text-blue-600" />
-                  </div>
-                </div>
-              </div>
+    {/* Stats Grid */}
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+  <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+    <div className="flex items-center justify-between">
+      <div>
+        <p className="text-sm font-medium text-gray-600">Total Users</p>
+        <p className="text-3xl font-bold text-gray-900">{stats.totalUsers}</p>
+        <p className="text-sm text-green-600 mt-1">+12% from last month</p>
+      </div>
+      <div className="p-3 bg-blue-100 rounded-full">
+        <Users className="w-6 h-6 text-blue-600" />
+      </div>
+    </div>
+  </div>
 
-              <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">
-                      Applications
-                    </p>
-                    <p className="text-3xl font-bold text-gray-900">
-                      {stats.totalApplications}
-                    </p>
-                    <p className="text-sm text-green-600 mt-1">
-                      +8% from last month
-                    </p>
-                  </div>
-                  <div className="p-3 bg-green-100 rounded-full">
-                    <FileText className="w-6 h-6 text-green-600" />
-                  </div>
-                </div>
-              </div>
+  <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+    <div className="flex items-center justify-between">
+      <div>
+        <p className="text-sm font-medium text-gray-600">Applications</p>
+        <p className="text-3xl font-bold text-gray-900">{stats.totalApplications}</p>
+        <p className="text-sm text-green-600 mt-1">+8% from last month</p>
+      </div>
+      <div className="p-3 bg-green-100 rounded-full">
+        <FileText className="w-6 h-6 text-green-600" />
+      </div>
+    </div>
+  </div>
 
-              <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">Pending</p>
-                    <p className="text-3xl font-bold text-gray-900">
-                      {stats.statusCounts?.Pending || 0}
-                    </p>
-                    <p className="text-sm text-yellow-600 mt-1">
-                      Needs attention
-                    </p>
-                  </div>
-                  <div className="p-3 bg-yellow-100 rounded-full">
-                    <Clock className="w-6 h-6 text-yellow-600" />
-                  </div>
-                </div>
-              </div>
+  <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+    <div className="flex items-center justify-between">
+      <div>
+        <p className="text-sm font-medium text-gray-600">Pending</p>
+        <p className="text-3xl font-bold text-gray-900">{stats.statusCounts?.Pending || 0}</p>
+        <p className="text-sm text-yellow-600 mt-1">Needs attention</p>
+      </div>
+      <div className="p-3 bg-yellow-100 rounded-full">
+        <Clock className="w-6 h-6 text-yellow-600" />
+      </div>
+    </div>
+  </div>
 
-              <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">
-                      Approved
-                    </p>
-                    <p className="text-3xl font-bold text-gray-900">
-                      {stats.statusCounts?.Approved || 0}
-                    </p>
-                    <p className="text-sm text-green-600 mt-1">
-                      Great progress!
-                    </p>
-                  </div>
-                  <div className="p-3 bg-green-100 rounded-full">
-                    <CheckCircle className="w-6 h-6 text-green-600" />
-                  </div>
-                </div>
-              </div>
-            </div>
+  <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+    <div className="flex items-center justify-between">
+      <div>
+        <p className="text-sm font-medium text-gray-600">Approved</p>
+        <p className="text-3xl font-bold text-gray-900">{stats.statusCounts?.Approved || 0}</p>
+        <p className="text-sm text-green-600 mt-1">Great progress!</p>
+      </div>
+      <div className="p-3 bg-green-100 rounded-full">
+        <CheckCircle className="w-6 h-6 text-green-600" />
+      </div>
+    </div>
+  </div>
+
+  {/* Approval Rate Card (Mobile Only) */}
+  <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 md:hidden">
+    <div className="flex items-center justify-between">
+      <div>
+        <p className="text-sm font-medium text-gray-600">Approval Rate</p>
+        <p className="text-3xl font-bold text-gray-900">{stats.approvalRate}%</p>
+        <p className="text-sm text-purple-600 mt-1">Keep it growing!</p>
+      </div>
+      <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full">
+        <Award className="w-6 h-6 text-white" />
+      </div>
+    </div>
+  </div>
+</div>
+
 
             {/* Quick Actions */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
