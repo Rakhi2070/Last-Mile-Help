@@ -192,37 +192,37 @@ const ServiceDashboard = () => {
           </h1>
           <p className="text-sm text-gray-500 mt-1">Service Management</p>
         </div>
-        
+
         <nav className="mt-6">
           <button
             onClick={() => setCurrentView("overview")}
             className={`w-full flex items-center px-6 py-3 text-left transition-all duration-200 ${
-              currentView === "overview" 
-                ? "bg-blue-50 text-blue-700 border-r-4 border-blue-700" 
+              currentView === "overview"
+                ? "bg-blue-50 text-blue-700 border-r-4 border-blue-700"
                 : "text-gray-600 hover:bg-gray-50"
             }`}
           >
             <TrendingUp className="w-5 h-5 mr-3" />
             Overview
           </button>
-          
+
           <button
             onClick={() => setCurrentView("users")}
             className={`w-full flex items-center px-6 py-3 text-left transition-all duration-200 ${
-              currentView === "users" 
-                ? "bg-blue-50 text-blue-700 border-r-4 border-blue-700" 
+              currentView === "users"
+                ? "bg-blue-50 text-blue-700 border-r-4 border-blue-700"
                 : "text-gray-600 hover:bg-gray-50"
             }`}
           >
             <Users className="w-5 h-5 mr-3" />
             Users & Applications
           </button>
-          
+
           <button
             onClick={() => setCurrentView("analytics")}
             className={`w-full flex items-center px-6 py-3 text-left transition-all duration-200 ${
-              currentView === "analytics" 
-                ? "bg-blue-50 text-blue-700 border-r-4 border-blue-700" 
+              currentView === "analytics"
+                ? "bg-blue-50 text-blue-700 border-r-4 border-blue-700"
                 : "text-gray-600 hover:bg-gray-50"
             }`}
           >
@@ -230,7 +230,7 @@ const ServiceDashboard = () => {
             Analytics
           </button>
         </nav>
-        
+
         <div className="absolute bottom-6 left-6 right-6">
           <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg p-4 text-white">
             <div className="flex items-center mb-2">
@@ -253,14 +253,17 @@ const ServiceDashboard = () => {
               {currentView === "analytics" && "Analytics & Reports"}
             </h2>
             <p className="text-gray-600 mt-1">
-              {currentView === "overview" && "Welcome to your service management dashboard"}
-              {currentView === "users" && "Manage user applications and status updates"}
-              {currentView === "analytics" && "Detailed insights and performance metrics"}
+              {currentView === "overview" &&
+                "Welcome to your service management dashboard"}
+              {currentView === "users" &&
+                "Manage user applications and status updates"}
+              {currentView === "analytics" &&
+                "Detailed insights and performance metrics"}
             </p>
           </div>
-          
+
           <div className="flex flex-col sm:flex-row gap-2 sm:items-center sm:space-x-4">
-            <button 
+            <button
               onClick={fetchAllUsers}
               className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
             >
@@ -282,9 +285,15 @@ const ServiceDashboard = () => {
               <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600">Total Users</p>
-                    <p className="text-3xl font-bold text-gray-900">{stats.totalUsers}</p>
-                    <p className="text-sm text-green-600 mt-1">+12% from last month</p>
+                    <p className="text-sm font-medium text-gray-600">
+                      Total Users
+                    </p>
+                    <p className="text-3xl font-bold text-gray-900">
+                      {stats.totalUsers}
+                    </p>
+                    <p className="text-sm text-green-600 mt-1">
+                      +12% from last month
+                    </p>
                   </div>
                   <div className="p-3 bg-blue-100 rounded-full">
                     <Users className="w-6 h-6 text-blue-600" />
@@ -295,9 +304,15 @@ const ServiceDashboard = () => {
               <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600">Applications</p>
-                    <p className="text-3xl font-bold text-gray-900">{stats.totalApplications}</p>
-                    <p className="text-sm text-green-600 mt-1">+8% from last month</p>
+                    <p className="text-sm font-medium text-gray-600">
+                      Applications
+                    </p>
+                    <p className="text-3xl font-bold text-gray-900">
+                      {stats.totalApplications}
+                    </p>
+                    <p className="text-sm text-green-600 mt-1">
+                      +8% from last month
+                    </p>
                   </div>
                   <div className="p-3 bg-green-100 rounded-full">
                     <FileText className="w-6 h-6 text-green-600" />
@@ -309,8 +324,12 @@ const ServiceDashboard = () => {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm font-medium text-gray-600">Pending</p>
-                    <p className="text-3xl font-bold text-gray-900">{stats.statusCounts?.Pending || 0}</p>
-                    <p className="text-sm text-yellow-600 mt-1">Needs attention</p>
+                    <p className="text-3xl font-bold text-gray-900">
+                      {stats.statusCounts?.Pending || 0}
+                    </p>
+                    <p className="text-sm text-yellow-600 mt-1">
+                      Needs attention
+                    </p>
                   </div>
                   <div className="p-3 bg-yellow-100 rounded-full">
                     <Clock className="w-6 h-6 text-yellow-600" />
@@ -321,9 +340,15 @@ const ServiceDashboard = () => {
               <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600">Approved</p>
-                    <p className="text-3xl font-bold text-gray-900">{stats.statusCounts?.Approved || 0}</p>
-                    <p className="text-sm text-green-600 mt-1">Great progress!</p>
+                    <p className="text-sm font-medium text-gray-600">
+                      Approved
+                    </p>
+                    <p className="text-3xl font-bold text-gray-900">
+                      {stats.statusCounts?.Approved || 0}
+                    </p>
+                    <p className="text-sm text-green-600 mt-1">
+                      Great progress!
+                    </p>
                   </div>
                   <div className="p-3 bg-green-100 rounded-full">
                     <CheckCircle className="w-6 h-6 text-green-600" />
@@ -339,7 +364,9 @@ const ServiceDashboard = () => {
                   <AlertTriangle className="w-6 h-6 text-orange-600 mr-2" />
                   <h3 className="text-lg font-semibold">Urgent Actions</h3>
                 </div>
-                <p className="text-gray-600 mb-4">Applications requiring immediate attention</p>
+                <p className="text-gray-600 mb-4">
+                  Applications requiring immediate attention
+                </p>
                 <button className="w-full bg-orange-600 text-white py-2 rounded-lg hover:bg-orange-700 transition-colors">
                   View Urgent Items
                 </button>
@@ -350,8 +377,10 @@ const ServiceDashboard = () => {
                   <TrendingUp className="w-6 h-6 text-green-600 mr-2" />
                   <h3 className="text-lg font-semibold">Performance</h3>
                 </div>
-                <p className="text-gray-600 mb-4">View detailed analytics and reports</p>
-                <button 
+                <p className="text-gray-600 mb-4">
+                  View detailed analytics and reports
+                </p>
+                <button
                   onClick={() => setCurrentView("analytics")}
                   className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition-colors"
                 >
@@ -364,8 +393,10 @@ const ServiceDashboard = () => {
                   <Users className="w-6 h-6 text-blue-600 mr-2" />
                   <h3 className="text-lg font-semibold">User Management</h3>
                 </div>
-                <p className="text-gray-600 mb-4">Manage users and their applications</p>
-                <button 
+                <p className="text-gray-600 mb-4">
+                  Manage users and their applications
+                </p>
+                <button
                   onClick={() => setCurrentView("users")}
                   className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors"
                 >
@@ -409,10 +440,13 @@ const ServiceDashboard = () => {
                       cy="50%"
                       outerRadius={80}
                       dataKey="value"
-                      label={({name, value}) => `${name}: ${value}`}
+                      label={({ name, value }) => `${name}: ${value}`}
                     >
                       {statusData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={pieColors[index % pieColors.length]} />
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={pieColors[index % pieColors.length]}
+                        />
                       ))}
                     </Pie>
                     <Tooltip />
@@ -432,7 +466,13 @@ const ServiceDashboard = () => {
                   <XAxis dataKey="date" />
                   <YAxis />
                   <Tooltip />
-                  <Area type="monotone" dataKey="count" stroke="#8B5CF6" fill="#8B5CF6" fillOpacity={0.3} />
+                  <Area
+                    type="monotone"
+                    dataKey="count"
+                    stroke="#8B5CF6"
+                    fill="#8B5CF6"
+                    fillOpacity={0.3}
+                  />
                 </AreaChart>
               </ResponsiveContainer>
             </div>
@@ -474,8 +514,8 @@ const ServiceDashboard = () => {
             {/* Users Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {filteredUsers.map((user) => (
-                <div 
-                  key={user._id} 
+                <div
+                  key={user._id}
                   className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:shadow-md transition-all duration-200"
                 >
                   <div className="flex items-center mb-4">
@@ -483,7 +523,9 @@ const ServiceDashboard = () => {
                       {user.name.charAt(0).toUpperCase()}
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-gray-900">{user.name}</h3>
+                      <h3 className="text-lg font-semibold text-gray-900">
+                        {user.name}
+                      </h3>
                       <div className="flex items-center text-sm text-gray-500">
                         <Mail className="w-4 h-4 mr-1" />
                         {user.email}
@@ -498,7 +540,9 @@ const ServiceDashboard = () => {
 
                   <div className="border-t pt-4">
                     <div className="flex items-center justify-between mb-3">
-                      <span className="text-sm font-medium text-gray-700">Applications</span>
+                      <span className="text-sm font-medium text-gray-700">
+                        Applications
+                      </span>
                       <span className="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
                         {user.servicesApplied?.length || 0}
                       </span>
@@ -507,17 +551,42 @@ const ServiceDashboard = () => {
                     {user.servicesApplied && user.servicesApplied.length > 0 ? (
                       <div className="space-y-2">
                         {user.servicesApplied.map((service, index) => (
-                          <div key={index} className="bg-gray-50 rounded-lg p-3">
-                            <div className="flex items-center justify-between mb-2">
-                              <span className="text-sm font-medium text-gray-700">{service.type}</span>
-                              <span className={`text-xs px-2 py-1 rounded-full ${statusColors[service.status]}`}>
-                                {service.status}
+                          <div
+                            key={index}
+                            className="bg-gray-50 rounded-lg p-3"
+                          >
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2 gap-2">
+                              <span className="text-sm font-medium text-gray-700">
+                                {service.type}
                               </span>
+
+                              <div className="flex items-center gap-2">
+                                <span
+                                  className={`text-xs px-2 py-1 rounded-full ${
+                                    statusColors[service.status]
+                                  }`}
+                                >
+                                  {service.status}
+                                </span>
+
+                                {service.status === "Approved" && (
+                                  <span className="text-xs font-medium bg-gradient-to-r from-blue-500 to-purple-600 text-white px-3 py-1 rounded-full">
+                                    Approval Rate {stats.approvalRate}%
+                                  </span>
+                                )}
+                              </div>
                             </div>
+
                             <select
                               className="w-full text-sm border border-gray-300 rounded px-2 py-1 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                               value={service.status}
-                              onChange={(e) => handleStatusChange(user._id, service.type, e.target.value)}
+                              onChange={(e) =>
+                                handleStatusChange(
+                                  user._id,
+                                  service.type,
+                                  e.target.value
+                                )
+                              }
                             >
                               <option value="Pending">Pending</option>
                               <option value="Approved">Approved</option>
@@ -540,8 +609,12 @@ const ServiceDashboard = () => {
             {filteredUsers.length === 0 && (
               <div className="text-center py-12">
                 <Users className="w-16 h-16 mx-auto mb-4 text-gray-400" />
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">No users found</h3>
-                <p className="text-gray-600">Try adjusting your search or filter criteria</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  No users found
+                </h3>
+                <p className="text-gray-600">
+                  Try adjusting your search or filter criteria
+                </p>
               </div>
             )}
           </div>
