@@ -43,17 +43,25 @@ const handleRegister = async (e) => {
   e.preventDefault();
   setIsLoading(true);
 
+  console.log("🟡 Attempting admin registration...");
+  console.log("➡️ Backend URL:", BASE_URL);
+  console.log("📧 Email:", email);
+  console.log("🔐 Password:", password);
+
   try {
     const res = await axios.post(`${BASE_URL}/api/admins/register`, { email, password });
+    console.log("✅ Registration Response:", res.data);
+
     showNotification("Admin registered successfully!", "success");
-    // Optionally redirect: navigate("/login");
-    console.log("Would navigate to /login");
+    console.log("📦 Would navigate to /login");
   } catch (err) {
+    console.error("❌ Error registering admin:", err);
     showNotification("Registration failed. Please try again.", "error");
   } finally {
     setIsLoading(false);
   }
 };
+
 
 
   const getPasswordStrengthColor = () => {
