@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { BASE_URL } from "../api";
+import { Link } from "react-router-dom";
+
 
 const AdminRegister = () => {
   const [email, setEmail] = useState("");
@@ -96,21 +98,27 @@ const handleRegister = async (e) => {
             top: `${Math.random() * 100}%`,
             left: `${Math.random() * 100}%`,
             animationDelay: `${i * 0.3}s`,
-            animationDuration: `${2 + Math.random() * 2}s`
+            animationDuration: `${2 + Math.random() * 2}s`,
           }}
         ></div>
       ))}
 
       {/* Enhanced Toast Notification */}
       {notification.show && (
-        <div className={`fixed top-4 right-4 z-50 px-6 py-3 rounded-xl shadow-2xl transform transition-all duration-500 ${
-          notification.type === 'success' 
-            ? 'bg-green-500 text-white' 
-            : 'bg-red-500 text-white'
-        } ${notification.show ? 'translate-x-0 opacity-100 scale-100' : 'translate-x-full opacity-0 scale-95'}`}>
+        <div
+          className={`fixed top-4 right-4 z-50 px-6 py-3 rounded-xl shadow-2xl transform transition-all duration-500 ${
+            notification.type === "success"
+              ? "bg-green-500 text-white"
+              : "bg-red-500 text-white"
+          } ${
+            notification.show
+              ? "translate-x-0 opacity-100 scale-100"
+              : "translate-x-full opacity-0 scale-95"
+          }`}
+        >
           <div className="flex items-center space-x-2">
             <span className="text-xl animate-bounce">
-              {notification.type === 'success' ? '✓' : '✗'}
+              {notification.type === "success" ? "✓" : "✗"}
             </span>
             <span className="font-medium">{notification.message}</span>
           </div>
@@ -118,12 +126,14 @@ const handleRegister = async (e) => {
       )}
 
       <div className="relative z-10 min-h-screen flex items-center justify-center px-4 py-8">
-        
         {/* Enhanced Form Container - Same structure as original */}
-        <div className={`bg-white/80 backdrop-blur-xl shadow-2xl rounded-3xl p-8 w-full max-w-md border border-white/20 transition-all duration-1000 ${
-          isAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-        }`}>
-          
+        <div
+          className={`bg-white/80 backdrop-blur-xl shadow-2xl rounded-3xl p-8 w-full max-w-md border border-white/20 transition-all duration-1000 ${
+            isAnimated
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-10"
+          }`}
+        >
           {/* Enhanced Header */}
           <div className="text-center mb-8">
             <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg animate-pulse">
@@ -137,10 +147,11 @@ const handleRegister = async (e) => {
 
           {/* Your Original Form Structure with Enhanced Styling */}
           <form onSubmit={handleRegister} className="space-y-6">
-            
             {/* Enhanced Email Input - Same functionality */}
             <div className="relative">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Email Address
+              </label>
               <div className="relative">
                 <input
                   type="email"
@@ -158,7 +169,9 @@ const handleRegister = async (e) => {
 
             {/* Enhanced Password Input - Same functionality */}
             <div className="relative">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Password
+              </label>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
@@ -176,19 +189,24 @@ const handleRegister = async (e) => {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-purple-600 transition-colors duration-200"
                 >
-                  <span className="text-xl">{showPassword ? '👁️' : '👁️‍🗨️'}</span>
+                  <span className="text-xl">{showPassword ? "👁️" : "👁️‍🗨️"}</span>
                 </button>
               </div>
-              
+
               {/* Password Strength Indicator - Pure UI Enhancement */}
               {password && (
                 <div className="mt-2">
                   <div className="flex items-center justify-between text-sm mb-1">
                     <span className="text-gray-600">Password Strength:</span>
-                    <span className={`font-medium ${
-                      passwordStrength < 50 ? 'text-red-500' : 
-                      passwordStrength < 75 ? 'text-yellow-500' : 'text-green-500'
-                    }`}>
+                    <span
+                      className={`font-medium ${
+                        passwordStrength < 50
+                          ? "text-red-500"
+                          : passwordStrength < 75
+                          ? "text-yellow-500"
+                          : "text-green-500"
+                      }`}
+                    >
                       {getPasswordStrengthText()}
                     </span>
                   </div>
@@ -208,8 +226,8 @@ const handleRegister = async (e) => {
               disabled={isLoading}
               className={`w-full py-4 rounded-xl font-semibold text-white transition-all duration-300 transform hover:scale-105 ${
                 !isLoading
-                  ? 'bg-gradient-to-r from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700 shadow-lg hover:shadow-xl'
-                  : 'bg-gray-400 cursor-not-allowed'
+                  ? "bg-gradient-to-r from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700 shadow-lg hover:shadow-xl"
+                  : "bg-gray-400 cursor-not-allowed"
               } relative overflow-hidden`}
             >
               <div className="absolute inset-0 bg-white/20 transform scale-x-0 hover:scale-x-100 transition-transform duration-300 origin-left"></div>
@@ -228,24 +246,22 @@ const handleRegister = async (e) => {
             {/* Enhanced Navigation Links */}
             <div className="text-center pt-4 border-t border-gray-200">
               <p className="text-gray-600">
-                Already have an account?{' '}
-                <button
-                  type="button"
-                  onClick={() => {
-                    // Your original navigation logic would go here
-                    console.log("Navigate to login");
-                  }}
+                Already have an account?{" "}
+                <Link
+                  to="/login" // or "/admin-login" based on your routing
                   className="text-purple-600 hover:text-purple-700 font-semibold transition-colors duration-200 hover:underline"
                 >
                   Sign In
-                </button>
+                </Link>
               </p>
             </div>
           </form>
 
           {/* Demo Section */}
           <div className="mt-6 pt-4 border-t border-gray-200">
-            <p className="text-xs text-gray-500 text-center mb-2">Live Mode - Connected to backend</p>
+            <p className="text-xs text-gray-500 text-center mb-2">
+              Live Mode - Connected to backend
+            </p>
             <button
               onClick={() => {
                 setEmail("");
