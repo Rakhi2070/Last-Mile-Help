@@ -26,17 +26,21 @@ const registerAdmin = async (req, res) => {
 
 // ✅ Login admin
 const loginAdmin = async (req, res) => {
-  console.log("📥 Login Request Body:", req.body); // Add this line
-
   const { email, password } = req.body;
 
   try {
+    console.log("📥 Login Request Body:", req.body);
+
     const admin = await Admin.findOne({ email });
+    console.log("🔎 Found Admin:", admin);
+
     if (!admin) {
       return res.status(400).json({ message: "Admin not found" });
     }
 
     const isMatch = await bcrypt.compare(password, admin.password);
+    console.log("🔐 Password Match:", isMatch);
+
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
@@ -46,5 +50,6 @@ const loginAdmin = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
 
 module.exports = { registerAdmin, loginAdmin };
