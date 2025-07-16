@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { BASE_URL } from "../api";
 
 const AdminRegister = () => {
   const [email, setEmail] = useState("");
@@ -37,32 +39,22 @@ const AdminRegister = () => {
   };
 
   // Your original backend logic - keeping it exactly the same
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    
-    try {
-      // Simulate your original axios call
-      // const res = await axios.post("http://localhost:5000/api/admins/register", { email, password });
-      
-      // For demo purposes, simulating the API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // Simulate success
-      showNotification("Admin registered successfully!", "success");
-      // toast.success("Admin registered successfully!");
-      // navigate("/login");
-      
-      console.log("Would navigate to /login");
-      
-    } catch (err) {
-      // Simulate error handling
-      showNotification("Registration failed. Please try again.", "error");
-      // toast.error(err.response?.data?.message || "Registration failed");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+const handleRegister = async (e) => {
+  e.preventDefault();
+  setIsLoading(true);
+
+  try {
+    const res = await axios.post(`${BASE_URL}/api/admins/register`, { email, password });
+    showNotification("Admin registered successfully!", "success");
+    // Optionally redirect: navigate("/login");
+    console.log("Would navigate to /login");
+  } catch (err) {
+    showNotification("Registration failed. Please try again.", "error");
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 
   const getPasswordStrengthColor = () => {
     if (passwordStrength < 25) return "bg-red-500";
@@ -245,7 +237,7 @@ const AdminRegister = () => {
 
           {/* Demo Section */}
           <div className="mt-6 pt-4 border-t border-gray-200">
-            <p className="text-xs text-gray-500 text-center mb-2">Demo Mode - Backend calls are simulated</p>
+            <p className="text-xs text-gray-500 text-center mb-2">Live Mode - Connected to backend</p>
             <button
               onClick={() => {
                 setEmail("");

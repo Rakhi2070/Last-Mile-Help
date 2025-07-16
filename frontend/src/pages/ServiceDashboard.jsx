@@ -35,6 +35,7 @@ import {
   DollarSign
 } from "lucide-react";
 import axios from "axios";
+import { BASE_URL } from "../api";
 
 
 const statusColors = {
@@ -58,7 +59,7 @@ const ServiceDashboard = () => {
  const fetchAllUsers = async () => {
   try {
     setLoading(true);
-    const res = await axios.get("http://localhost:5000/api/users"); // 🔁 Use your real API endpoint
+    const res = await axios.get(`${BASE_URL}/api/users`); // 🔁 Use your real API endpoint
     const data = res.data;
     setUsers(data);
     calculateStats(data);

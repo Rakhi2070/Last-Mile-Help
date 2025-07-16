@@ -3,6 +3,8 @@ import axios from "axios";
 import UserCard from "../components/UserCard";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { BASE_URL } from "../api";
+
 
 const Admin = () => {
   const [users, setUsers] = useState([]);
@@ -24,7 +26,7 @@ const Admin = () => {
 
   const fetchUsers = () => {
     axios
-      .get('http://192.168.1.108:5000/api/users')
+      .get(`${BASE_URL}/api/users`)
       .then((res) => setUsers(res.data))
       .catch((err) => console.error("Error fetching users:", err));
   };
@@ -40,7 +42,7 @@ const Admin = () => {
     if (!confirm) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/users/${userId}`);
+      await axios.delete(`${BASE_URL}/api/users/${userId}`);
       toast.success("User deleted successfully!");
       fetchUsers(); // Refresh list
     } catch (error) {

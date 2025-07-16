@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
-const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+import { BASE_URL } from "../api";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -24,14 +24,10 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-     const res = await axios.post(`${BASE_URL}/api/admins/login`,
-       {
-         email,
-         password,
-       }
-     );
-
-
+     const res = await axios.post(`${BASE_URL}/api/admins/login`, {
+  email,
+  password,
+});
       // Store token / user
       localStorage.setItem("adminToken", res.data.token);
       navigate("/admin");

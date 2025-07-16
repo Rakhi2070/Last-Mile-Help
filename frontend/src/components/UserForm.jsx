@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { BASE_URL } from "../api";
+
 
 const UserForm = () => {
   const navigate = useNavigate();
@@ -50,7 +52,7 @@ const UserForm = () => {
     form.append("servicesApplied", JSON.stringify(services));
 
     try {
-      const res = await axios.post("http://192.168.1.108:5000/api/users", form, {
+     const res = await axios.post(`${BASE_URL}/api/users`, form, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 

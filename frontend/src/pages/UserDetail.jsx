@@ -5,6 +5,8 @@ import QRCode from "react-qr-code";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { toast } from "react-toastify";
+import { BASE_URL } from "../api";
+
 
 
 const UserDetail = () => {
@@ -20,7 +22,7 @@ const UserDetail = () => {
     const fetchUser = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`http://192.168.1.108:5000/api/users/${id}`);
+        const res = await axios.get(`${BASE_URL}/api/users/${id}`);
         setUser(res.data);
         setError("");
       } catch (error) {
@@ -80,10 +82,10 @@ const UserDetail = () => {
         <p style="margin-bottom: 8px;"><strong>Age:</strong> ${user.age}</p>
         <br />
         <p style="margin-bottom: 8px;"><strong>Photo:</strong></p>
-        <img src="http://192.168.1.108:5000/uploads/${user.photo}" style="width: 120px; height: 120px; object-fit: cover; border-radius: 8px; border: 2px solid #e5e7eb;" />
+        <img src="${BASE_URL}/uploads/${user.photo}" style="width: 120px; height: 120px; object-fit: cover; border-radius: 8px; border: 2px solid #e5e7eb;" />
         <br /><br />
         <p style="margin-bottom: 8px;"><strong>Document:</strong></p>
-        <a href="http://192.168.1.108:5000/uploads/${user.document}" style="color: #2563eb; text-decoration: underline;">View Document</a>
+        <a href="${BASE_URL}/uploads/${user.document}" style="color: #2563eb; text-decoration: underline;">View Document</a>
       </div>
     `;
 
@@ -111,7 +113,7 @@ const handleApplyService = async () => {
   if (!serviceType) return toast.error("Please select a service.");
 
   try {
-    await axios.post(`http://localhost:5000/api/users/${id}/apply-service`, {
+    await axios.post(`${BASE_URL}/api/users/${id}/apply-service`, {
       userId: id,
       serviceType,
       notes,
@@ -184,7 +186,7 @@ const handleApplyService = async () => {
             <div className="flex items-center justify-center mb-6">
               <div className="relative">
                 <img
-                  src={`http://192.168.1.108:5000/uploads/${user.photo}`}
+                  src={`${BASE_URL}/uploads/${user.photo}`}
                   alt={user.name}
                   className="w-32 h-32 object-cover rounded-full border-4 border-blue-200 shadow-lg"
                 />
@@ -257,7 +259,7 @@ const handleApplyService = async () => {
                   <p className="text-sm text-gray-500">Document</p>
                 </div>
                 <a
-                  href={`http://192.168.1.108:5000/uploads/${user.document}`}
+                  href={`${BASE_URL}/uploads/${user.document}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium transition-colors"
@@ -280,7 +282,7 @@ const handleApplyService = async () => {
               
               <div className="inline-block bg-gradient-to-br from-blue-50 to-purple-50 p-6 rounded-2xl shadow-inner">
                 <QRCode 
-                  value={`http://192.168.1.108:5173/user/${id}`} 
+                  value={`${window.location.origin}/user/${id}`}  
                   size={180}
                   style={{ height: "auto", maxWidth: "100%", width: "100%" }}
                 />

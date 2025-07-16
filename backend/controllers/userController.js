@@ -184,5 +184,5 @@ module.exports = {
   deleteUser,
   updateUser,
   applyForService,
-  updateServiceStatus, // ← add this
+  updateServiceStatus, 
 };
