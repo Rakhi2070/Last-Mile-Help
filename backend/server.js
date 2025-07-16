@@ -12,7 +12,7 @@ const app = express();
 
 // ✅ Step 1: Allow cross-origin requests (from mobile or other IPs)
 app.use(cors({
-  origin: "https://last-mile-help.vercel.app/", // In production, set this to your frontend domain
+  origin: "https://last-mile-help.vercel.app", // In production, set this to your frontend domain
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
