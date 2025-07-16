@@ -185,7 +185,7 @@ const ServiceDashboard = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Sidebar */}
-      <div className="fixed left-0 top-0 h-full w-64 bg-white shadow-xl z-10 border-r border-gray-200">
+      <div className="md:fixed md:left-0 md:top-0 md:h-full md:w-64 w-full bg-white shadow-xl z-10 border-b md:border-b-0 md:border-r border-gray-200">
         <div className="p-6">
           <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             Admin Panel
@@ -243,7 +243,7 @@ const ServiceDashboard = () => {
       </div>
 
       {/* Main Content */}
-      <div className="ml-64 p-8">
+      <div className="md:ml-64 p-4 md:p-8">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
@@ -259,7 +259,7 @@ const ServiceDashboard = () => {
             </p>
           </div>
           
-          <div className="flex items-center space-x-4">
+          <div className="flex flex-col sm:flex-row gap-2 sm:items-center sm:space-x-4">
             <button 
               onClick={fetchAllUsers}
               className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
