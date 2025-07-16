@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 
 // ✅ Register admin
 const registerAdmin = async (req, res) => {
+  console.log("🛂 Admin Register Request Body:", req.body);
   try {
     const { email, password } = req.body;
 
